@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GameVerse — Games</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="dark-theme min-h-screen flex flex-col">
+    <!-- NAV -->
+    <nav
+      class="bg-black/30 backdrop-blur-md fixed w-full z-50 border-b border-cyan-400/20"
+    >
+      <div class="container flex items-center justify-between px-6 py-3">
+        <div class="flex items-center gap-3">
+          <img src="assets/erasebg-transformed (1).png" class="w-10 h-10" />
+          <span class="neon text-2xl font-extrabold">GameVerse</span>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="games.html" class="nav-link">Games</a>
+          <a href="about.html" class="nav-link">About</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+          <button id="themeToggle" class="theme-toggle">
+            <span id="themeIcon">☀️</span>
+            <span class="label">Light</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container mx-auto pt-28 px-6 pb-20">
+      <h1 class="text-3xl font-bold neon mb-4">Games</h1>
+
+      <!-- Search + Add -->
+      <div class="flex flex-col md:flex-row items-center gap-4 mb-8">
+        <input
+          id="search"
+          type="search"
+          placeholder="Search games..."
+          class="px-3 py-2 rounded w-full md:w-1/2 text-black"
+        />
+        <button id="addBtn" class="btn-primary">➕ Add Game</button>
+      </div>
+
+      <!-- Grid -->
+      <div id="grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </main>
+
+    <!-- Modal -->
+    <div
+      id="modal"
+      class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50"
+    >
+      <div class="bg-white text-black p-6 rounded-lg w-96">
+        <h3 id="modalTitle" class="text-xl font-bold mb-3">Add Game</h3>
+        <form id="gameForm" class="space-y-3">
+          <input id="idInput" type="hidden" />
+          <input
+            id="titleInput"
+            placeholder="Title"
+            class="w-full border px-3 py-2 rounded"
+            required
+          />
+          <input
+            id="genreInput"
+            placeholder="Genre"
+            class="w-full border px-3 py-2 rounded"
+            required
+          />
+          <input
+            id="ratingInput"
+            type="number"
+            min="1"
+            max="10"
+            placeholder="Rating"
+            class="w-full border px-3 py-2 rounded"
+            required
+          />
+          <input
+            id="imageInput"
+            type="url"
+            placeholder="Image URL (optional)"
+            class="w-full border px-3 py-2 rounded"
+          />
+          <div class="flex justify-end gap-3">
+            <button type="button" id="cancelModal" class="btn-ghost">
+              Cancel
+            </button>
+            <button type="submit" class="btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <footer class="py-6 text-center text-slate-400">
+      © <span id="year"></span> GameVerse
+    </footer>
+
+    <script type="module">
+      import { initThemeToggle } from "./utils/themeUtils.js";
+
+      document.addEventListener("DOMContentLoaded", () => {
+        initThemeToggle();
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        const defaultImg =
+          "https://images.unsplash.com/photo-1606112219348-204d7d8b94ee?w=400";
+        let db = [
+          {
+            id: 1,
+            title: "Cyber Punk",
+            genre: "Science Fiction",
+            rating: 9,
+            image:
+              "assets/CyberPunk.jpg",
+          },
+          {
+            id: 2,
+            title: "GTA 5",
+            genre: "Open World",
+            rating: 10,
+            image:
+              "assets/GTA5.jpg",
+          },
+          {
+            id: 3,
+            title: "Dark Ops",
+            genre: "Shooter",
+            rating: 9,
+            image:
+              "assets/DarkOps.jpg",
+          },
+        ];
+
+        const grid = document.getElementById("grid");
+        const search = document.getElementById("search");
+        const addBtn = document.getElementById("addBtn");
+        const modal = document.getElementById("modal");
+        const cancelModal = document.getElementById("cancelModal");
+        const form = document.getElementById("gameForm");
+
+        // Render function
+        function render(list) {
+          grid.innerHTML = "";
+          if (!list.length) {
+            grid.innerHTML =
+              "<div class='text-slate-400'>No games found.</div>";
+            return;
+          }
+
+          list.forEach((g) => {
+            const card = document.createElement("div");
+            card.className =
+              "card game-card hover:scale-105 hover:border-cyan-400/60 transition-transform";
+            card.innerHTML = `
+            <img src="${g.image || defaultImg}" alt="${
+              g.title
+            }" class="w-full h-44 object-cover rounded mb-3">
+            <h4 class="font-semibold text-lg">${g.title}</h4>
+            <p class="text-sm text-slate-300">${g.genre}</p>
+            <div class="mt-2 text-sm text-yellow-400">⭐ ${g.rating}/10</div>
+            <div class="mt-4 flex gap-2">
+              <button class="btn-ghost edit">✏️ Edit</button>
+              <button class="btn-ghost del">🗑️ Delete</button>
+            </div>
+          `;
+            grid.appendChild(card);
+
+            // Edit
+            card.querySelector(".edit").addEventListener("click", () => {
+              document.getElementById("modalTitle").textContent = "Edit Game";
+              document.getElementById("idInput").value = g.id;
+              document.getElementById("titleInput").value = g.title;
+              document.getElementById("genreInput").value = g.genre;
+              document.getElementById("ratingInput").value = g.rating;
+              document.getElementById("imageInput").value = g.image;
+              modal.classList.remove("hidden");
+            });
+
+            // Delete
+            card.querySelector(".del").addEventListener("click", () => {
+              if (confirm("Delete this game?")) {
+                db = db.filter((x) => x.id !== g.id);
+                render(db);
+              }
+            });
+          });
+        }
+
+        // Add new game
+        addBtn.addEventListener("click", () => {
+          document.getElementById("modalTitle").textContent = "Add Game";
+          document.getElementById("idInput").value = "";
+          form.reset();
+          modal.classList.remove("hidden");
+        });
+
+        cancelModal.addEventListener("click", () =>
+          modal.classList.add("hidden")
+        );
+
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const id = document.getElementById("idInput").value;
+          const title = document.getElementById("titleInput").value.trim();
+          const genre = document.getElementById("genreInput").value.trim();
+          const rating = Number(document.getElementById("ratingInput").value);
+          const image =
+            document.getElementById("imageInput").value.trim() || defaultImg;
+
+          if (id) {
+            db = db.map((x) =>
+              x.id === Number(id) ? { ...x, title, genre, rating, image } : x
+            );
+          } else {
+            db.push({ id: Date.now(), title, genre, rating, image });
+          }
+          modal.classList.add("hidden");
+          render(db);
+        });
+
+        // Search
+        search.addEventListener("input", (e) => {
+          const q = e.target.value.toLowerCase();
+          render(
+            db.filter(
+              (x) =>
+                x.title.toLowerCase().includes(q) ||
+                x.genre.toLowerCase().includes(q)
+            )
+          );
+        });
+
+        render(db);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GameVerse — About</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body class="dark-theme min-h-screen flex flex-col text-white">
+    <!-- NAVBAR -->
+    <nav class="bg-black/30 backdrop-blur-md fixed w-full z-50 border-b border-cyan-400/20">
+      <div class="container flex items-center justify-between px-6 py-3">
+        <div class="flex items-center gap-3">
+          <img src="assets/erasebg-transformed (1).png" class="w-10 h-10" alt="GameVerse Logo" />
+          <span class="neon text-2xl font-extrabold">GameVerse</span>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="games.html" class="nav-link">Games</a>
+          <a href="about.html" class="nav-link">About</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+          <button id="themeToggle" class="theme-toggle flex items-center gap-1 border border-cyan-400 px-3 py-1 rounded">
+            <span id="themeIcon">☀️</span><span class="label">Light</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="container mx-auto pt-28 px-6 space-y-12">
+      <!-- Title -->
+      <h1 class="text-4xl neon font-extrabold text-center mb-10">About GameVerse</h1>
+
+      <!-- Mission Section -->
+      <section class="card fade-up p-8 rounded-lg bg-black/40 border border-cyan-400/30">
+        <h3 class="text-2xl font-semibold mb-3 neon">🎯 Our Mission</h3>
+        <p class="text-gray-300 leading-relaxed">
+          To empower gamers and developers by creating a vibrant hub where creativity thrives, competition grows, and friendships form.
+          GameVerse is more than a platform—it’s a universe where every player matters.
+        </p>
+      </section>
+
+      <!-- Journey Section -->
+      <section class="card fade-up p-8 rounded-lg bg-black/40 border border-cyan-400/30">
+        <h3 class="text-2xl font-semibold mb-3 neon">🚀 Our Journey</h3>
+        <ul class="list-disc pl-6 text-gray-300 space-y-2">
+          <li>2023 — GameVerse founded as a passion project by 3 developers.</li>
+          <li>2024 — Reached 500k+ active players across 40+ countries.</li>
+          <li>2025 — Expanding into eSports events, indie publishing, and community-driven tournaments.</li>
+        </ul>
+      </section>
+
+      <!-- Why Choose GameVerse -->
+      <section class="fade-up grid md:grid-cols-3 gap-8">
+        <div class="card p-6 bg-black/40 border border-cyan-400/30 rounded-lg hover:scale-105 transition">
+          <h4 class="text-xl font-bold mb-2 neon">🌍 Global Community</h4>
+          <p class="text-gray-300">Connect with players and developers from around the world, share your creations, and grow together.</p>
+        </div>
+        <div class="card p-6 bg-black/40 border border-cyan-400/30 rounded-lg hover:scale-105 transition">
+          <h4 class="text-xl font-bold mb-2 neon">⚙️ Developer Tools</h4>
+          <p class="text-gray-300">Access free tools to publish, test, and monetize your games on our open platform.</p>
+        </div>
+        <div class="card p-6 bg-black/40 border border-cyan-400/30 rounded-lg hover:scale-105 transition">
+          <h4 class="text-xl font-bold mb-2 neon">🏆 Esports Integration</h4>
+          <p class="text-gray-300">Join exclusive tournaments, compete globally, and earn real rewards.</p>
+        </div>
+      </section>
+
+      <!-- Team Section -->
+      <section class="card fade-up bg-black/40 border border-cyan-400/30 p-8 rounded-lg">
+        <h3 class="text-2xl font-semibold mb-3 neon text-center">👥 Meet the Team</h3>
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6 text-center">
+          <div class="hover:scale-105 transition">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Ali Khan" class="w-24 h-24 rounded-full mx-auto mb-2" />
+            <div class="font-semibold">Ali Khan</div>
+            <div class="text-sm text-gray-400">Founder</div>
+          </div>
+          <div class="hover:scale-105 transition">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sara Ahmed" class="w-24 h-24 rounded-full mx-auto mb-2" />
+            <div class="font-semibold">Sara Ahmed</div>
+            <div class="text-sm text-gray-400">Lead Developer</div>
+          </div>
+          <div class="hover:scale-105 transition">
+            <img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Bilal Q" class="w-24 h-24 rounded-full mx-auto mb-2" />
+            <div class="font-semibold">Bilal Qureshi</div>
+            <div class="text-sm text-gray-400">UI/UX Designer</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="fade-up text-center bg-cyan-600 text-white p-10 rounded-lg shadow-lg">
+        <h3 class="text-3xl font-bold mb-3">Join the GameVerse Revolution</h3>
+        <p class="text-white/90 mb-6">Be part of the future of gaming. Developers, players, and dreamers — your journey starts here.</p>
+        <a href="contact.html" class="btn-primary inline-block bg-white text-cyan-700 font-semibold px-6 py-3 rounded-lg hover:scale-105 transition">
+          Get in Touch
+        </a>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="py-6 text-center text-slate-400 border-t border-cyan-400/20 mt-10">
+      © <span id="year"></span> GameVerse — All Rights Reserved.
+    </footer>
+
+    <!-- Script -->
+    <script type="module">
+      import { initThemeToggle } from "./utils/themeUtils.js";
+      document.addEventListener("DOMContentLoaded", () => {
+        initThemeToggle();
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        // Scroll animation
+        const els = document.querySelectorAll(".fade-up");
+        const reveal = () => {
+          els.forEach(el => {
+            const r = el.getBoundingClientRect();
+            if (r.top < window.innerHeight - 100) el.classList.add("show");
+          });
+        };
+        window.addEventListener("scroll", reveal);
+        reveal();
+      });
+    </script>
+  </body>
+</html>
